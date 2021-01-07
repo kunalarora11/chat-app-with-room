@@ -2,7 +2,7 @@
 Realtime chat app with custom room codes
 
 ## Deployed on heroku
-
+https://chat-application-11.herokuapp.com
 
 ### Usage
 ```
