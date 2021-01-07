@@ -2,6 +2,8 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
+const mongoose = require('mongoose');
+const Msg = require('./models/messages')
 const formatMessage = require('./utils/messages');
 const {
   userJoin,
@@ -10,6 +12,10 @@ const {
   getRoomUsers
 } = require('./utils/users');
 
+const mongoDB = 'mongodb+srv://admin:adm1n1234@cluster0.85ax8.mongodb.net/message-database?retryWrites=true&w=majority'
+mongoose.connect(mongoDB,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=>{
+  console.log('DB connected');
+}).catch(err => console.log(err))
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
@@ -45,7 +51,10 @@ io.on('connection', socket => {
 
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
-
+    const message = new Msg({msg})
+    message.save().then(()=>{
+      
+    })
     io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
