@@ -26,6 +26,10 @@ const bot = 'Bot';
 
 // Run when user connects
 io.on('connection', socket => {
+
+  Msg.find().then(()=>{
+    socket.emit('output-message')
+  })
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 
@@ -53,9 +57,9 @@ io.on('connection', socket => {
     const user = getCurrentUser(socket.id);
     const message = new Msg({msg})
     message.save().then(()=>{
-      
+      io.to(user.room).emit('message', formatMessage(user.username, msg));
     })
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
+    
   });
 
   // Runs when user disconnects

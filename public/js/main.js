@@ -28,6 +28,18 @@ socket.on('message', message => {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
+// Message from server on reload
+socket.on('output-message', message => {
+  console.log(message);
+  if(message.length){
+    message.forEach(message=>{outputMessage(message);})
+  }
+  // outputMessage(message);
+
+  // Scroll down on new messgade
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+
 // Message submit
 chatForm.addEventListener('submit', e => {
   e.preventDefault();
