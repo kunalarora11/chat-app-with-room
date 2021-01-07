@@ -12,7 +12,7 @@ const {
   getRoomUsers
 } = require('./utils/users');
 
-const mongoDB = 'mongodb+srv://admin:adm1n1234@cluster0.85ax8.mongodb.net/message-database?retryWrites=true&w=majority'
+const mongoDB = 'Connection String'
 mongoose.connect(mongoDB,{useNewUrlParser: true, useUnifiedTopology: true}).then(()=>{
   console.log('DB connected');
 }).catch(err => console.log(err))
